@@ -276,13 +276,37 @@ Then you can fetch individual regions using
 ./src/fetch.py feeds/<region>.json
 ```
 
+### Validating region files
+
+Region files are automatically validated against a JSON schema when you open a pull request.
+No local tools are required - the GitHub Actions CI will catch any schema errors on Pull Request.
+
+For faster local feedback before committing, you can optionally validate files yourself:
+
+```bash
+# Install the validator (requires Python/pipx)
+pipx install check-jsonschema
+
+# Validate a single region file
+check-jsonschema --schemafile schemas/transitous-region-feed.json feeds/<region>.json
+```
+
+For contributors who prefer automated local checks, the repository includes a [pre-commit](https://pre-commit.com/) configuration:
+
+```bash
+pipx install pre-commit
+pre-commit install
+```
+
+This will automatically validate region files before each commit.
+
 ### More source options
 
 There are all kinds of options that may be specified in a source:
 
 Option Name            | Description
 ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------
-`type`                 | `http`, `mobility-database`, `transitland-atlas` or `url`. Url sources are not downloaded, but passed to MOTIS as URL. This is used for realtime feeds.
+`type`                 | `http`, `mobility-database`, `transitland-atlas` or `url`. Url sources are not downloaded, but passed to MOTIS as URL. This is used for realtime feeds (GTFS-RT), shared mobility (GBFS), and NeTEx.
 `spec`                 | `gtfs`, `gtfs-rt`, `gbfs` or `netex`. `gtfs-rt` and `netex` may only be used when `type` is `url`.
 `fix`                  | Fix / drop fields that are not correct.
 `skip`                 | Don't download or use this feed.
@@ -484,5 +508,3 @@ motis server
 ```
 
 Once it's done, the motis web interface should be reachable on [localhost:8080](http://localhost:8080).
-
-

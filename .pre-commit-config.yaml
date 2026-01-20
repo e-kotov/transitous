@@ -1,0 +1,8 @@
+repos:
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.29.4
+    hooks:
+      - id: check-jsonschema
+        name: Validate Transitous region feed files
+        args: ["--schemafile", "schemas/transitous-region-feed.json"]
+        files: ^feeds/[a-z]{2}(-[a-z]{2})?\.json$

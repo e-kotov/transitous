@@ -37,3 +37,5 @@ Also, follow <a href="https://en.osm.town/@transitous" rel="me">Transitous on Ma
 ## Adding a region
 
 Find the documentation on the [Project Website](https://transitous.org/doc/#adding-a-region).
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and validation instructions.

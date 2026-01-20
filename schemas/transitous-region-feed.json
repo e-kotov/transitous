@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://transitous.org/schemas/region-feed.json",
+  "title": "Transitous Region Feed Configuration",
+  "description": "Schema for Transitous regional public transport feed configuration files",
+  "type": "object",
+  "required": [
+    "maintainers",
+    "sources"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "maintainers": {
+      "type": "array",
+      "description": "List of people responsible for maintaining this region's feeds",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "github"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the maintainer",
+            "minLength": 1
+          },
+          "github": {
+            "type": "string",
+            "description": "GitHub username of the maintainer",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9-]){0,38}$"
+          }
+        }
+      }
+    },
+    "note": {
+      "type": "string",
+      "description": "Optional note about the region"
+    },
+    "sources": {
+      "type": "array",
+      "description": "List of transit feed sources to fetch and process",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Unique name for this source (used for output filename, avoid spaces)",
+            "minLength": 1,
+            "pattern": "^[^ ]+$",
+            "$comment": "We allow anything that is not an ASCII space to support Japanese feeds using full-width spaces (u3000). Stricter regex would be ^[^\\s]+$"
+          },
+          "type": {
+            "type": "string",
+            "description": "Source type: 'http', 'mobility-database', 'transitland-atlas' or 'url'. Url sources are not downloaded, but passed to MOTIS as URL. Used for realtime feeds (GTFS-RT), shared mobility (GBFS), and NeTEx.",
+            "enum": [
+              "http",
+              "mobility-database",
+              "transitland-atlas",
+              "url"
+            ]
+          },
+          "spec": {
+            "type": "string",
+            "description": "Feed specification format: 'gtfs', 'gtfs-rt', 'gbfs' or 'netex'. 'gtfs-rt' and 'netex' may only be used when type is 'url'.",
+            "enum": [
+              "gtfs",
+              "gtfs-rt",
+              "gbfs",
+              "netex"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "description": "URL to fetch the feed from",
+            "format": "uri",
+            "pattern": "^https?://"
+          },
+          "mdb-id": {
+            "type": "string",
+            "description": "Mobility Database ID (for type: mobility-database). Supports mdb-NNNN and jbda-* formats.",
+            "pattern": "^(mdb-[0-9]+|jbda-.+)$"
+          },
+          "transitland-atlas-id": {
+            "type": "string",
+            "description": "Transitland Atlas Onestop ID (for type: transitland-atlas)",
+            "minLength": 1
+          },
+          "license": {
+            "type": "object",
+            "description": "License information for the feed",
+            "properties": {
+              "spdx-identifier": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "SPDX license identifier from https://spdx.org/licenses/",
+                "minLength": 1
+              },
+              "url": {
+                "type": "string",
+                "description": "URL with license information",
+                "format": "uri"
+              }
+            }
+          },
+          "fix": {
+            "type": "boolean",
+            "description": "Attempt to automatically fix invalid entries in the feed"
+          },
+          "skip": {
+            "type": "boolean",
+            "description": "Skip downloading/using this feed"
+          },
+          "skip-reason": {
+            "type": "string",
+            "description": "Reason why this feed is skipped",
+            "minLength": 1
+          },
+          "fix-csv-quotes": {
+            "type": "boolean",
+            "description": "Fix improperly quoted CSV fields in GTFS files. A symptom is if stop names start containing CSV."
+          },
+          "drop-shapes": {
+            "type": "boolean",
+            "description": "Remove route shapes from the feed (use if shapes are mostly wrong)"
+          },
+          "drop-agency-names": {
+            "type": "array",
+            "description": "List of agency names to remove (avoid duplicates if agency provides its own feed)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "url-override": {
+            "type": "string",
+            "description": "Override URL for database feeds or use custom mirror",
+            "format": "uri"
+          },
+          "use-gtfsclean": {
+            "type": "boolean",
+            "description": "Preprocess GTFS feeds with gtfsclean (default: true, set false for GTFS-Flex)"
+          },
+          "script": {
+            "type": "string",
+            "description": "Lua script filename for MOTIS data processing (see MOTIS docs)",
+            "pattern": "^[a-zA-Z0-9_-]+\\.lua$"
+          },
+          "http-options": {
+            "type": "object",
+            "description": "HTTP-specific options (headers, TLS settings, fetch interval)",
+            "properties": {
+              "headers": {
+                "type": "object",
+                "description": "Custom HTTP headers",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "ignore-tls-errors": {
+                "type": "boolean",
+                "description": "Ignore TLS certificate errors"
+              },
+              "fetch-interval-days": {
+                "type": "integer",
+                "description": "Minimum days between fetches",
+                "minimum": 1
+              }
+            }
+          },
+          "display-name-options": {
+            "type": "object",
+            "description": "Options for vehicle display names (regex for matching/moving names)",
+            "properties": {
+              "copy-trip-names-matching": {
+                "type": "string",
+                "description": "Regex for trip_short_name values to display",
+                "format": "regex"
+              },
+              "keep-route-names-matching": {
+                "type": "string",
+                "description": "Regex for route_short_name values to keep",
+                "format": "regex"
+              },
+              "move-headsigns-matching": {
+                "type": "string",
+                "description": "Regex for trip_headsign values to move to route_short_name",
+                "format": "regex"
+              }
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "http"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "url"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "url"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "url",
+                "spec"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "mobility-database"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "mdb-id"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "transitland-atlas"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "transitland-atlas-id"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "spec": {
+                  "const": "netex"
+                }
+              },
+              "required": [
+                "spec"
+              ]
+            },
+            "then": {
+              "properties": {
+                "type": {
+                  "const": "url"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "spec": {
+                  "const": "gbfs"
+                }
+              },
+              "required": [
+                "spec"
+              ]
+            },
+            "then": {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "transitland-atlas",
+                    "url"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
