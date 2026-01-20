@@ -65,6 +65,8 @@ class Source:
             if "license" in parsed:
                 if "spdx-identifier" in parsed["license"]:
                     self.license.spdx_identifier = parsed["license"]["spdx-identifier"]
+                elif "spdx_identifier" in parsed["license"]:
+                    self.license.spdx_identifier = parsed["license"]["spdx_identifier"]
                 if "url" in parsed["license"]:
                     self.license.url = parsed["license"]["url"]
 
