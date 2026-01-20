@@ -1,0 +1,26 @@
+name: Validate Transitous Feed Files
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'feeds/**/*.json'
+      - 'schemas/transitous-region-feed.json'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'feeds/**/*.json'
+      - 'schemas/transitous-region-feed.json'
+
+jobs:
+  validate-feeds:
+    runs-on: ubuntu-latest
+    name: Validate region feed configurations
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Validate all feed JSON files
+        uses: dsanders11/json-schema-validate-action@v1.3.0
+        with:
+          schema: schemas/transitous-region-feed.json
+          files: 'feeds/*.json'
