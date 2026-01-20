@@ -395,12 +395,11 @@
                 "headers": {
                     "ApiKey": "e8143a1e-d12e-4a01-9b08-caf3071e4853"
                 }
-            },          
+            },
             "license": {
                 "spdx-identifier": "CC-BY-3.0",
                 "url": "https://opendata.caceres.es/dataset/autobuses-caceres"
             }
-            
         },
         {
             "name": "Autobús-urbano-de-Castellón-de-la-Plana",
@@ -673,10 +672,10 @@
                     "ApiKey": "e8143a1e-d12e-4a01-9b08-caf3071e4853"
                 }
             },
-                "license": {
+            "license": {
                 "spdx-identifier": "CC-BY-4.0",
                 "url": "https://data.ctb.eus/en/dataset/horario-lineas-bilbobus"
-                }
+            }
         },
         {
             "name": "Bilbobus",
@@ -702,7 +701,7 @@
             "license": {
                 "spdx-identifier": "CC-BY-4.0",
                 "url": "https://data.ctb.eus/en/dataset/horarios-lineas-bizkaibus"
-                    }
+            }
         },
         {
             "name": "Bizkaibus",
@@ -872,9 +871,9 @@
                 }
             },
             "license": {
-                "spdx-identifier": "CC-BY-4.0", 
+                "spdx-identifier": "CC-BY-4.0",
                 "url": "https://dadesobertes.fgc.cat/explore/dataset/gtfs_zip/"
-                }
+            }
         },
         {
             "name": "Ferrocarriles-de-la-Generalitat-de-Cataluña",
@@ -882,9 +881,9 @@
             "url": "https://dadesobertes.fgc.cat/explore/dataset/trip-updates-gtfs_realtime/files/735985017f62fd33b2fe46e31ce53829/download/",
             "spec": "gtfs-rt",
             "license": {
-                "spdx-identifier": "CC-BY-4.0", 
+                "spdx-identifier": "CC-BY-4.0",
                 "url": "https://dadesobertes.fgc.cat/explore/dataset/trip-updates-gtfs_realtime/"
-                }
+            }
         },
         {
             "name": "Ferry-Baleària",
@@ -1148,7 +1147,7 @@
                 "spdx-identifier": "CC-BY-4.0",
                 "url": "https://data.ctb.eus/en/dataset/horarios-erandiobus"
             }
-        },      
+        },
         {
             "name": "Metro-Bilbao",
             "type": "http",
@@ -1603,7 +1602,7 @@
             "name": "Trasnportes-Insular-de-La-Palma-(TILP)",
             "type": "http",
             "url": "https://www.arcgis.com/sharing/rest/content/items/a00541a34b4b432aa7c9937f34b3e19e/data",
-            "fix": "true"
+            "fix": true
         }
     ]
 }

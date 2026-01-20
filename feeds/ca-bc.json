@@ -10,7 +10,7 @@
             "name": "BC-Ferries",
             "type": "transitland-atlas",
             "transitland-atlas-id": "f-c0-bcferries~bc~ca",
-            "fix": "true"
+            "fix": true
         },
         {
             "name": "Black-Ball-Ferry-Line",
