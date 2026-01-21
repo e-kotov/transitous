@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: none
+#
+# SPDX-License-Identifier: CC0-1.0
+
+repos:
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: v5.0.2
+    hooks:
+      - id: reuse
+  - repo: local
+    hooks:
+      - id: format-feeds
+        name: Format Transitous region feed files
+        entry: python3 scripts/format_feeds.py
+        language: python
+        files: ^feeds/.*\.json$
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.36.0
+    hooks:
+      - id: check-jsonschema
+        name: Validate Transitous region feed files
+        args: ["--schemafile", "schemas/transitous-region-feed.json"]
+        files: ^feeds/.*\.json$

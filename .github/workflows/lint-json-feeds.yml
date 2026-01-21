@@ -1,0 +1,44 @@
+# SPDX-FileCopyrightText: none
+#
+# SPDX-License-Identifier: CC0-1.0
+
+name: Lint JSON Feeds
+
+on:
+  pull_request:
+    paths:
+      - 'feeds/**.json'
+      - 'scripts/format_feeds.py'
+  push:
+    branches: [main, master]
+    paths:
+      - 'feeds/**.json'
+      - 'scripts/format_feeds.py'
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # valid for PRs from same repo
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Run formatter script
+        run: |
+          python3 scripts/format_feeds.py feeds/**/*.json
+          
+      - name: Check for changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "Error: The following files are not formatted correctly:"
+            git status --porcelain
+            echo "Please run 'python3 scripts/format_feeds.py feeds/**/*.json' locally and commit the changes."
+            exit 1
+          fi
