@@ -67,4 +67,4 @@ pipx install pre-commit
 pre-commit install
 ```
 
-This will automatically lint and validate region files when you run `git commit`.
+This will automatically lint, validate region files when you run `git commit`, and check for license headers according to the [REUSE.toml](./REUSE.toml) file.
