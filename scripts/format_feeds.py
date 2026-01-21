@@ -11,8 +11,15 @@ def format_file(path):
     # Safety Check: Ensure we only format files in the feeds directory
     # normalize path to avoid issues with ./feeds/ etc
     abs_path = os.path.abspath(path)
-    if "/feeds/" not in abs_path:
-        print(f"Skipping {path}: Not in 'feeds' directory")
+    feeds_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "feeds"))
+    
+    try:
+        if os.path.commonpath([abs_path, feeds_dir]) != feeds_dir:
+            print(f"Skipping {path}: Not in 'feeds' directory")
+            return
+    except ValueError:
+        # commonpath raises ValueError if paths are on different drives (Windows)
+        print(f"Skipping {path}: Not in 'feeds' directory (different drive)")
         return
 
     try:

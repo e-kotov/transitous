@@ -57,7 +57,6 @@ check-jsonschema --schemafile schemas/transitous-region-feed.json feeds/*.json
 ```
 
 
-
 ### Automated Checks
 
 For automated validation before each commit:

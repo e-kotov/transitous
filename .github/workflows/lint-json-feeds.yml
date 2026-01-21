@@ -28,17 +28,17 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.x'
 
       - name: Run formatter script
         run: |
-          python3 scripts/format_feeds.py feeds/*.json
+          python3 scripts/format_feeds.py feeds/**/*.json
           
       - name: Check for changes
         run: |
           if [[ -n $(git status --porcelain) ]]; then
             echo "Error: The following files are not formatted correctly:"
             git status --porcelain
-            echo "Please run 'python3 scripts/format_feeds.py feeds/*.json' locally and commit the changes."
+            echo "Please run 'python3 scripts/format_feeds.py feeds/**/*.json' locally and commit the changes."
             exit 1
           fi

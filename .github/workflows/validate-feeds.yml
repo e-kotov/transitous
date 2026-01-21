@@ -27,4 +27,4 @@ jobs:
         uses: dsanders11/json-schema-validate-action@v1.3.0
         with:
           schema: schemas/transitous-region-feed.json
-          files: 'feeds/*.json'
+          files: 'feeds/**/*.json'
