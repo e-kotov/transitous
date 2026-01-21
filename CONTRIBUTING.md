@@ -9,6 +9,31 @@ Thank you for your interest in contributing!
 
 For detailed instructions on adding a region, see the [Project Documentation](https://transitous.org/doc/#adding-a-region).
 
+## Formatting
+
+Feed files must be formatted consistently (indentation: 4 spaces, UTF-8).
+
+**Option 1: Python Script (No installation required)**
+
+You can use the included script to format files:
+
+```bash
+# Format specific files
+python3 scripts/format_feeds.py feeds/my-feed.json
+
+# Format all files
+python3 scripts/format_feeds.py feeds/*.json
+```
+
+**Option 2: Pre-commit (Automated)**
+
+If you have `pre-commit` installed, you can use it to auto-fix issues:
+
+```bash
+# Auto-format all files
+pre-commit run --all-files
+```
+
 ## Validation
 
 Feed files are automatically validated against a JSON schema in CI via GitHub Actions.
@@ -27,9 +52,13 @@ check-jsonschema --schemafile schemas/transitous-region-feed.json feeds/<region>
 
 # Validate all feed files
 check-jsonschema --schemafile schemas/transitous-region-feed.json feeds/*.json
+# Validate all feed files
+check-jsonschema --schemafile schemas/transitous-region-feed.json feeds/*.json
 ```
 
-### Pre-commit hook (optional)
+
+
+### Automated Checks
 
 For automated validation before each commit:
 
@@ -38,4 +67,4 @@ pipx install pre-commit
 pre-commit install
 ```
 
-This will automatically validate region files when you run `git commit`.
+This will automatically lint and validate region files when you run `git commit`.

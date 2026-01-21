@@ -276,6 +276,15 @@ Then you can fetch individual regions using
 ./src/fetch.py feeds/<region>.json
 ```
 
+### Formatting
+
+To ensure consistent style (indentation, Unicode), you can use the provided helper script:
+
+```bash
+# Format your feed file
+python3 scripts/format_feeds.py feeds/<region>.json
+```
+
 ### Validating region files
 
 Region files are automatically validated against a JSON schema when you open a pull request.
@@ -291,6 +300,8 @@ pipx install check-jsonschema
 check-jsonschema --schemafile schemas/transitous-region-feed.json feeds/<region>.json
 ```
 
+
+
 For contributors who prefer automated local checks, the repository includes a [pre-commit](https://pre-commit.com/) configuration:
 
 ```bash
@@ -298,7 +309,7 @@ pipx install pre-commit
 pre-commit install
 ```
 
-This will automatically validate region files before each commit.
+This will automatically lint and validate region files before each commit.
 
 ### More source options
 

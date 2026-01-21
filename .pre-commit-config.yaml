@@ -1,6 +1,13 @@
 repos:
+  - repo: local
+    hooks:
+      - id: format-feeds
+        name: Format Transitous region feed files
+        entry: python3 scripts/format_feeds.py
+        language: python
+        files: ^feeds/.*\.json$
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.29.4
+    rev: 0.36.0
     hooks:
       - id: check-jsonschema
         name: Validate Transitous region feed files
