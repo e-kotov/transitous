@@ -16,7 +16,7 @@
             "name": "Black-Ball-Ferry-Line",
             "type": "transitland-atlas",
             "transitland-atlas-id": "f-c284-blackballferryline",
-            "url-override": "http://mjcaction.com/MJC_GTFS_Public/blackball_google_transit.zip"
+            "extend-calendar": true
         },
         {
             "name": "Campbell-River-Transit",
