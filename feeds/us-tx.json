@@ -40,7 +40,6 @@
             "transitland-atlas-id": "f-capitalmetro~rt~alerts",
             "skip": true,
             "skip-reason": "api-key is missing"
-
         },
         {
             "name": "via-san-antonio",
