@@ -331,6 +331,7 @@ Option Name            | Description
 `display-name-options` | Specify which strings identifying a vehicle should be displayed to the user
 `script`               | A Lua script applied by MOTIS to GTFS data during import, see [the MOTIS documentation](https://github.com/motis-project/motis/blob/master/docs/scripting.md) for details.
 `use-gtfsclean`        | Preprocess GTFS feeds with `gtfsclean`, default is `true`.
+`extend-calendar`      | Extend currently active calendar and calendar_dates to never expire. Use if the feed is still valid but has an old expiration date (common for ferries).
 
 #### License Options
 

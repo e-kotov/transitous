@@ -55,7 +55,7 @@
             "description": "Unique name for this source (used for output filename, avoid spaces)",
             "minLength": 1,
             "pattern": "^[^ ]+$",
-            "$comment": "We allow anything that is not an ASCII space to support Japanese feeds using full-width spaces (u3000). Stricter regex would be ^[^\\s]+$"
+            "$comment": "We intentionally only forbid the ASCII space (U+0020) so that Unicode whitespace such as full-width spaces (U+3000) remains allowed. Using ^[^\\s]+$ would be stricter but would also reject these Unicode whitespace characters, which is not desired."
           },
           "type": {
             "type": "string",
@@ -69,7 +69,7 @@
           },
           "spec": {
             "type": "string",
-            "description": "Feed specification format: 'gtfs', 'gtfs-rt', 'gbfs' or 'netex'. 'gtfs-rt' and 'netex' may only be used when type is 'url'.",
+            "description": "Feed specification format: 'gtfs', 'gtfs-rt', 'gbfs' or 'netex'. 'netex' may only be used when type is 'url'.",
             "enum": [
               "gtfs",
               "gtfs-rt",
@@ -148,6 +148,10 @@
           "use-gtfsclean": {
             "type": "boolean",
             "description": "Preprocess GTFS feeds with gtfsclean (default: true, set false for GTFS-Flex)"
+          },
+          "extend-calendar": {
+            "type": "boolean",
+            "description": "Extend currently active calendar and calendar_dates to never expire. Use if the feed is still valid but has an old expiration date (common for ferries)."
           },
           "script": {
             "type": "string",
@@ -260,6 +264,32 @@
             "if": {
               "properties": {
                 "spec": {
+                  "const": "gtfs-rt"
+                }
+              },
+              "required": [
+                "spec"
+              ]
+            },
+            "then": {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "url",
+                    "mobility-database",
+                    "transitland-atlas"
+                  ]
+                }
+              },
+              "required": [
+                "type"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "spec": {
                   "const": "netex"
                 }
               },
@@ -272,7 +302,10 @@
                 "type": {
                   "const": "url"
                 }
-              }
+              },
+              "required": [
+                "type"
+              ]
             }
           },
           {
@@ -294,7 +327,10 @@
                     "url"
                   ]
                 }
-              }
+              },
+              "required": [
+                "type"
+              ]
             }
           }
         ]
